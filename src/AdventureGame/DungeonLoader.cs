@@ -2,6 +2,8 @@ namespace AdventureGame;
 
 public static class DungeonLoader
 {
+	static public int exitRow;
+	static public int exitCol;
 	private const char Wall = '#';
 
 	public static Room[,] Load(string filePath)
@@ -11,8 +13,8 @@ public static class DungeonLoader
 		int rows = int.Parse(lines[0]);
 		int cols = int.Parse(lines[1]);
 
-		int exitRow = int.Parse(lines[2]);
-		int exitCol = int.Parse(lines[3]);
+		exitRow = int.Parse(lines[2]);
+		exitCol = int.Parse(lines[3]);
 		int lampRow = int.Parse(lines[4]);
 		int lampCol = int.Parse(lines[5]);
 		int keyRow = int.Parse(lines[6]);

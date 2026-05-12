@@ -13,8 +13,8 @@ public class AdventureGame
 
 	private Adventurer adventurer;
 	private Room[,] dungeon;
-	private int aRow;
-	private int aCol;
+	private int currentRow;
+	private int currentCol;
 	private bool isChestOpen;
 	private bool hasPlayerQuit;
 	private bool isAdventureAlive;
@@ -43,13 +43,13 @@ public class AdventureGame
 
 				input = GetInput();
 			}
-			while(!IsValidInput(input));
+			while (!IsValidInput(input));
 
 			ProcessInput(input);
 
 			UpdateGameState();
 		}
-		while(!IsGameOver());
+		while (!IsGameOver());
 
 		ShowGameOverScreen();
 	}
@@ -57,41 +57,11 @@ public class AdventureGame
 	private void Init()
 	{
 		adventurer = new Adventurer();
-
-		Room r1 = new Room();
-		r1.SetLit(true);
-		r1.SetDescription("Room 1");
-		r1.SetSouth(true);
-		r1.SetEast(true);
-		r1.SetLamp(true);
-		r1.SetKey(true);
-
-		Room r2 = new Room();
-		r2.SetDescription("Room 2");
-		r2.SetSouth(true);
-		r2.SetWest(true);
-
-		Room r3 = new Room();
-		r3.SetLit(true);
-		r3.SetDescription("Room 3");
-		r3.SetNorth(true);
-		r3.SetEast(true);
-		r3.SetChest(true);
+		dungeon = DungeonLoader.Load("../../../../../res/Dungeon.txt");
 
 
-		Room r4 = new Room();
-		r4.SetDescription("Room 4");
-		r4.SetNorth(true);
-		r4.SetWest(true);
-
-		dungeon = new Room[,]
-		{
-			{ r1, r2 },
-			{ r3, r4 }
-		};
-
-		aRow = 1;
-		aCol = 0;
+		currentRow = 1;
+		currentCol = 1;
 
 		isChestOpen = false;
 		hasPlayerQuit = false;
@@ -107,9 +77,9 @@ public class AdventureGame
 
 	private void ShowScene()
 	{
-		var r = dungeon[aRow, aCol];
+		var r = dungeon[currentRow, currentCol];
 
-		if(adventurer.HasLamp() || r.IsLit())
+		if (adventurer.HasLamp() || r.IsLit())
 		{
 			Console.WriteLine(r.GetDescription());
 		}
@@ -138,7 +108,7 @@ public class AdventureGame
 	{
 		string[] validInputs = { GO_NORTH, GO_SOUTH, GO_EAST, GO_WEST, GET_LAMP, GET_KEY, OPEN_CHEST, QUIT };
 
-		if(!validInputs.Contains(input))
+		if (!validInputs.Contains(input))
 		{
 			Console.WriteLine("ERROR: Invalid input. Please try again.");
 			return false;
@@ -149,38 +119,38 @@ public class AdventureGame
 
 	private void ProcessInput(string input)
 	{
-		Room r = dungeon[aRow, aCol];
+		Room r = dungeon[currentRow, currentCol];
 
-		if(!adventurer.HasLamp() && !r.IsLit() && input != lastDirection)
+		if (!adventurer.HasLamp() && !r.IsLit() && input != lastDirection)
 		{
 			Console.WriteLine("You got eaten alive by the Grue!");
 			isAdventureAlive = false;
 		}
-		else if(input == GO_NORTH)
+		else if (input == GO_NORTH)
 		{
 			GoNorth(r);
 		}
-		else if(input == GO_SOUTH)
+		else if (input == GO_SOUTH)
 		{
 			GoSouth(r);
 		}
-		else if(input == GO_EAST)
+		else if (input == GO_EAST)
 		{
 			GoEast(r);
 		}
-		else if(input == GO_WEST)
+		else if (input == GO_WEST)
 		{
 			GoWest(r);
 		}
-		else if(input == GET_LAMP)
+		else if (input == GET_LAMP)
 		{
 			GetLamp(r);
 		}
-		else if(input == GET_KEY)
+		else if (input == GET_KEY)
 		{
 			GetKey(r);
 		}
-		else if(input == OPEN_CHEST)
+		else if (input == OPEN_CHEST)
 		{
 			OpenChest(r);
 		}
@@ -197,7 +167,7 @@ public class AdventureGame
 
 	private bool IsGameOver()
 	{
-		return isChestOpen || hasPlayerQuit || !isAdventureAlive;
+		return (isChestOpen && currentCol == DungeonLoader.exitCol && currentRow == DungeonLoader.exitRow) || hasPlayerQuit || !isAdventureAlive;
 	}
 
 	private void ShowGameOverScreen()
@@ -207,9 +177,9 @@ public class AdventureGame
 
 	private void GoNorth(Room r)
 	{
-		if(r.HasNorth())
+		if (r.HasNorth())
 		{
-			aRow -= 1;
+			currentRow -= 1;
 			lastDirection = GO_SOUTH;
 		}
 		else
@@ -220,9 +190,9 @@ public class AdventureGame
 
 	private void GoSouth(Room r)
 	{
-		if(r.HasSouth())
+		if (r.HasSouth())
 		{
-			aRow += 1;
+			currentRow += 1;
 			lastDirection = GO_NORTH;
 		}
 		else
@@ -233,9 +203,9 @@ public class AdventureGame
 
 	private void GoEast(Room r)
 	{
-		if(r.HasEast())
+		if (r.HasEast())
 		{
-			aCol += 1;
+			currentCol += 1;
 			lastDirection = GO_WEST;
 		}
 		else
@@ -246,9 +216,9 @@ public class AdventureGame
 
 	private void GoWest(Room r)
 	{
-		if(r.HasWest())
+		if (r.HasWest())
 		{
-			aCol -= 1;
+			currentCol -= 1;
 			lastDirection = GO_EAST;
 		}
 		else
@@ -259,7 +229,7 @@ public class AdventureGame
 
 	private void GetLamp(Room r)
 	{
-		if(r.HasLamp())
+		if (r.HasLamp())
 		{
 			Console.WriteLine("You got the lamp!");
 			adventurer.SetLamp(true);
@@ -273,7 +243,7 @@ public class AdventureGame
 
 	private void GetKey(Room r)
 	{
-		if(r.HasKey())
+		if (r.HasKey())
 		{
 			Console.WriteLine("You got the key!");
 			adventurer.SetKey(true);
@@ -287,11 +257,12 @@ public class AdventureGame
 
 	private void OpenChest(Room r)
 	{
-		if(r.HasChest())
+		if (r.HasChest())
 		{
-			if(adventurer.HasKey())
+			if (adventurer.HasKey())
 			{
 				Console.WriteLine("You got the treasure!");
+				Console.WriteLine("You suddenly feel the need to run to the exit");
 				isChestOpen = true;
 			}
 			else

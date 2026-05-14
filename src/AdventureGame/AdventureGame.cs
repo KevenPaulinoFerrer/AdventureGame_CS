@@ -63,7 +63,7 @@ public class AdventureGame
 	private void Init()
 	{
 		string basePath = AppContext.BaseDirectory;
-		string path = Path.Combine(basePath, "../", "../", "../", "../", "../", "res", "Dungeon2.txt");
+		string path = Path.Combine(basePath, "../", "../", "../", "../", "../", "res", "Dungeon.txt");
 		adventurer = new Adventurer();
 		dungeon = DungeonLoader.Load(path);
 
@@ -86,9 +86,8 @@ public class AdventureGame
 	private void ShowScene()
 	{
 		var r = dungeon[currentRow, currentCol];
-		Console.WriteLine($"player position: {currentRow}, {currentCol}");
-		Console.WriteLine($"Greu position: {DungeonLoader.grueRow}, {DungeonLoader.grueCol}");
 		Console.WriteLine($"Greu Delay: {greuDelay}");
+		Console.WriteLine($"player position: {currentRow}, {currentCol}");
 		Console.WriteLine();
 
 		if (adventurer.HasLamp() || r.IsLit())
@@ -199,10 +198,22 @@ public class AdventureGame
 		{
 			return;
 		}
+		Room move = greuPos;
 
-		Room move = path[greuPos];
-		DungeonLoader.grueRow = move.row;
-		DungeonLoader.grueCol = move.col;
+		Console.WriteLine("Greu Path:");
+		for (int i = 0; i < path.Count; i++)
+		{
+			move = path[move];
+			Console.Write($"#{i}({move.row},{move.col})");
+			if (move == playerPos)
+			{
+				break;
+			}
+		}
+		Console.WriteLine();
+
+		DungeonLoader.grueRow = path[greuPos].row;
+		DungeonLoader.grueCol = path[greuPos].col;
 
 	}
 
@@ -247,6 +258,7 @@ public class AdventureGame
 
 	private void ShowGameOverScreen()
 	{
+		Console.Clear();
 		Console.WriteLine("Game Over!");
 		if (!isAdventureAlive) Console.WriteLine("You have been devourered");
 		else Console.WriteLine("You have Escaped!");

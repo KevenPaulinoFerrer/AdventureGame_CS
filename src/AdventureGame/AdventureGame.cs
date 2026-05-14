@@ -198,8 +198,8 @@ public class AdventureGame
 		{
 			return;
 		}
-		Room move = greuPos;
 
+		Room move = greuPos;
 		Console.WriteLine("Greu Path:");
 		for (int i = 0; i < path.Count; i++)
 		{

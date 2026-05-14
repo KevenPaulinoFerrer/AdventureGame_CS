@@ -122,19 +122,19 @@ public class Room : IEquatable<Room>
 	public List<Room> getAdjacents(Room[,] dungeon)
 	{
 		List<Room> Adj = new List<Room>();
-		if (dungeon[row, col].hasNorth)
+		if (hasNorth)
 		{
 			Adj.Add(dungeon[row - 1, col]);
 		}
-		if (dungeon[row, col].hasSouth)
+		if (hasSouth)
 		{
 			Adj.Add(dungeon[row + 1, col]);
 		}
-		if (dungeon[row, col].hasEast)
+		if (hasEast)
 		{
 			Adj.Add(dungeon[row, col + 1]);
 		}
-		if (dungeon[row, col].hasWest)
+		if (hasWest)
 		{
 			Adj.Add(dungeon[row, col - 1]);
 		}

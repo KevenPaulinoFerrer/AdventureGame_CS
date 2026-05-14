@@ -1,6 +1,6 @@
 namespace AdventureGame;
 
-public class Room
+public class Room : IEquatable<Room>
 {
 	private bool isLit;
 	private bool hasLamp;
@@ -11,6 +11,8 @@ public class Room
 	private bool hasSouth;
 	private bool hasEast;
 	private bool hasWest;
+	public int row;
+	public int col;
 
 	private string description;
 
@@ -92,7 +94,7 @@ public class Room
 		hasChest = b;
 	}
 
-	
+
 	public void SetNorth(bool b)
 	{
 		hasNorth = b;
@@ -117,9 +119,69 @@ public class Room
 	{
 		description = d;
 	}
+	public List<Room> getAdjacents(Room[,] dungeon)
+	{
+		List<Room> Adj = new List<Room>();
+		if (dungeon[row, col].hasNorth)
+		{
+			Adj.Add(dungeon[row - 1, col]);
+		}
+		if (dungeon[row, col].hasSouth)
+		{
+			Adj.Add(dungeon[row + 1, col]);
+		}
+		if (dungeon[row, col].hasEast)
+		{
+			Adj.Add(dungeon[row, col + 1]);
+		}
+		if (dungeon[row, col].hasWest)
+		{
+			Adj.Add(dungeon[row, col - 1]);
+		}
+		return Adj;
+	}
 
 	public override string ToString()
 	{
 		return $"Room[isLit={isLit}, hasLamp={hasLamp}, hasKey={hasKey}, hasChest={hasChest}, hasNorth={hasNorth}, hasSouth={hasSouth}, hasEast={hasEast}, hasWest={hasWest}, description={description}]";
+	}
+
+	public bool Equals(Room? other)
+	{
+		if (other is null)
+			return false;
+
+		if (ReferenceEquals(this, other))
+			return true;
+
+		return
+			row == other.row &&
+			col == other.col;
+	}
+
+	public override bool Equals(object? obj)
+	{
+		return Equals(obj as Room);
+	}
+
+	public override int GetHashCode()
+	{
+		return HashCode.Combine(row, col);
+	}
+
+	public static bool operator ==(Room left, Room right)
+	{
+		if (ReferenceEquals(left, right))
+			return true;
+
+		if (left is null || right is null)
+			return false;
+
+		return left.Equals(right);
+	}
+
+	public static bool operator !=(Room left, Room right)
+	{
+		return !(left == right);
 	}
 }

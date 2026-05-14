@@ -1,3 +1,7 @@
+
+using System.Collections;
+using System.Collections.Generic;
+
 namespace AdventureGame;
 
 public class AdventureGame
@@ -19,6 +23,7 @@ public class AdventureGame
 	private bool hasPlayerQuit;
 	private bool isAdventureAlive;
 	private string lastDirection;
+	static public int greuDelay = 1;
 
 	public AdventureGame()
 	{
@@ -45,6 +50,7 @@ public class AdventureGame
 			}
 			while (!IsValidInput(input));
 
+			Console.Clear();
 			ProcessInput(input);
 
 			UpdateGameState();
@@ -56,8 +62,10 @@ public class AdventureGame
 
 	private void Init()
 	{
+		string basePath = AppContext.BaseDirectory;
+		string path = Path.Combine(basePath, "../", "../", "../", "../", "../", "res", "Dungeon2.txt");
 		adventurer = new Adventurer();
-		dungeon = DungeonLoader.Load("../../../../../res/Dungeon.txt");
+		dungeon = DungeonLoader.Load(path);
 
 
 		currentRow = 1;
@@ -78,6 +86,10 @@ public class AdventureGame
 	private void ShowScene()
 	{
 		var r = dungeon[currentRow, currentCol];
+		Console.WriteLine($"player position: {currentRow}, {currentCol}");
+		Console.WriteLine($"Greu position: {DungeonLoader.grueRow}, {DungeonLoader.grueCol}");
+		Console.WriteLine($"Greu Delay: {greuDelay}");
+		Console.WriteLine();
 
 		if (adventurer.HasLamp() || r.IsLit())
 		{
@@ -123,7 +135,6 @@ public class AdventureGame
 
 		if (!adventurer.HasLamp() && !r.IsLit() && input != lastDirection)
 		{
-			Console.WriteLine("You got eaten alive by the Grue!");
 			isAdventureAlive = false;
 		}
 		else if (input == GO_NORTH)
@@ -162,7 +173,71 @@ public class AdventureGame
 
 	private void UpdateGameState()
 	{
+		if (isChestOpen)
+		{
+			if (greuDelay > 0)
+			{
+				greuDelay -= 1;
+				return;
+			}
+			MoveGrue();
+			if (DungeonLoader.grueCol == currentCol && DungeonLoader.grueRow == currentRow)
+			{
+				isAdventureAlive = false;
+			}
+		}
+	}
 
+	private void MoveGrue()
+	{
+		Room playerPos = dungeon[currentRow, currentCol];
+		Room greuPos = dungeon[DungeonLoader.grueRow, DungeonLoader.grueCol];
+
+		Dictionary<Room, Room>? path = BFS(greuPos, playerPos, dungeon);
+
+		if (path is null)
+		{
+			return;
+		}
+
+		Room move = path[greuPos];
+		DungeonLoader.grueRow = move.row;
+		DungeonLoader.grueCol = move.col;
+
+	}
+
+	Dictionary<Room, Room>? BFS(Room goal, Room start, Room[,] dungeon)
+	{
+		if (goal is null || start is null)
+		{
+			return null;
+		}
+		Dictionary<Room, Room> path = new Dictionary<Room, Room>();
+		Queue<Room> open = new Queue<Room>();
+
+		path.Add(start, start);
+		open.Enqueue(start);
+
+		while (open.Count > 0)
+		{
+			Room r = open.Dequeue();
+			if (r.Equals(goal))
+			{
+				return path;
+			}
+			else
+			{
+				foreach (Room adjRoom in r.getAdjacents(dungeon))
+				{
+					if (!path.ContainsKey(adjRoom))
+					{
+						path.Add(adjRoom, r);
+						open.Enqueue(adjRoom);
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	private bool IsGameOver()
@@ -173,6 +248,8 @@ public class AdventureGame
 	private void ShowGameOverScreen()
 	{
 		Console.WriteLine("Game Over!");
+		if (!isAdventureAlive) Console.WriteLine("You have been devourered");
+		else Console.WriteLine("You have Escaped!");
 	}
 
 	private void GoNorth(Room r)

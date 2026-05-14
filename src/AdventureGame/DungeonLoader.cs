@@ -4,6 +4,8 @@ public static class DungeonLoader
 {
 	static public int exitRow;
 	static public int exitCol;
+	static public int grueRow;
+	static public int grueCol;
 	private const char Wall = '#';
 
 	public static Room[,] Load(string filePath)
@@ -21,6 +23,8 @@ public static class DungeonLoader
 		int keyCol = int.Parse(lines[7]);
 		int chestRow = int.Parse(lines[8]);
 		int chestCol = int.Parse(lines[9]);
+		grueRow = int.Parse(lines[10]);
+		grueCol = int.Parse(lines[11]);
 
 		// lines[10] and lines[11] are grueRow/grueCol if needed elsewhere
 
@@ -77,6 +81,7 @@ public static class DungeonLoader
 
 			var (row, col) = traversableTiles[i];
 			Room room = dungeon[row, col];
+			(room.row, room.col) = (row, col);
 
 			room.SetLit(isLit);
 			room.SetDescription(description);

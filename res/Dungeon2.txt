@@ -1,0 +1,37 @@
+6
+8
+5
+6
+1
+2
+3
+5
+5
+1
+1
+5
+########
+#     ##
+### # ##
+#   # ##
+# ### ##
+#      #
+1|You stand at the entrance of a damp stone corridor.
+1|A rusty lantern hook hangs from the ceiling.
+0|Cold air drifts through cracks in the walls.
+1|The floor here is covered in old footprints.
+0|A distant growl echoes through the darkness.
+0|A narrow passage descends deeper underground.
+1|The smell of wet moss fills this chamber.
+1|Faint scratches mark the stone walls.
+0|A puddle of water reflects faint light.
+0|You hear chains rattling somewhere nearby.
+1|Broken bricks litter the floor here, something shimmers beneath a brick.
+0|A draft blows from a hidden opening.
+1|The corridor widens into a dusty hallway.
+1|You notice claw marks carved into the stone.
+0|An eerie silence surrounds this area.
+0|The walls are damp and cold to the touch.
+1|A heavy wooden chest rests against the wall.
+1|Fresh footprints lead toward the exit.
+0|Moonlight shines faintly from above.

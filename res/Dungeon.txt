@@ -17,7 +17,7 @@
 ########
 1|A room with a spooky gate
 1|A spooky room
-0|A dark room. To the east there seems to be a soft glimmer of light under a door.
+0|A dark room. To the east there seems to be a soft shimmer of light under a door.
 1|A Kitchen. It looks used recently. A key is in the sink
 1|A long corridor
 1|A living room

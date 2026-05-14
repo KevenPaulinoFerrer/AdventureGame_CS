@@ -63,7 +63,7 @@ public class AdventureGame
 	private void Init()
 	{
 		string basePath = AppContext.BaseDirectory;
-		string path = Path.Combine(basePath, "../", "../", "../", "../", "../", "res", "Dungeon.txt");
+		string path = Path.Combine(basePath, "../", "../", "../", "../", "../", "res", "Dungeon2.txt");
 		adventurer = new Adventurer();
 		dungeon = DungeonLoader.Load(path);
 

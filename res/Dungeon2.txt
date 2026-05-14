@@ -1,37 +1,45 @@
-6
 8
-5
+8
+6
 6
 1
 2
 3
-5
-5
-1
-1
-5
+4
+6
+3
+4
+3
 ########
-#     ##
-### # ##
-#   # ##
-# ### ##
 #      #
-1|You stand at the entrance of a damp stone corridor.
-1|A rusty lantern hook hangs from the ceiling.
-0|Cold air drifts through cracks in the walls.
-1|The floor here is covered in old footprints.
-0|A distant growl echoes through the darkness.
-0|A narrow passage descends deeper underground.
-1|The smell of wet moss fills this chamber.
-1|Faint scratches mark the stone walls.
-0|A puddle of water reflects faint light.
-0|You hear chains rattling somewhere nearby.
-1|Broken bricks litter the floor here, something shimmers beneath a brick.
-0|A draft blows from a hidden opening.
-1|The corridor widens into a dusty hallway.
-1|You notice claw marks carved into the stone.
-0|An eerie silence surrounds this area.
-0|The walls are damp and cold to the touch.
-1|A heavy wooden chest rests against the wall.
-1|Fresh footprints lead toward the exit.
-0|Moonlight shines faintly from above.
+# #### #
+# #    #
+# # ## #
+# # ## #
+#      #
+########
+1|You step into a damp stone corridor.
+1|An old brass lamp sits here covered in dust.
+0|Cold air flows through the narrow hallway.
+1|Faint torchlight flickers against the walls.
+0|You hear dripping water echoing nearby.
+1|The stone floor is cracked and uneven.
+0|A narrow path bends around piles of rubble.
+1|Dust swirls through this abandoned chamber.
+0|The walls here are scratched with strange markings.
+1|You hear distant footsteps echoing underground.
+0|A rusty key lies partially hidden beneath debris.
+1|A foul smell lingers heavily in the air.
+0|Loose stones crunch beneath your feet.
+1|A cold draft enters from a dark opening.
+0|The silence here feels unnatural.
+1|Broken bricks cover the floor of this passage.
+0|You hear a low growl somewhere in the darkness.
+1|Moisture drips steadily from the ceiling.
+0|The walls are damp and covered in moss.
+1|A massive shadow moves just beyond your vision.
+0|Fresh claw marks scar the stone walls.
+1|An old wooden chest reinforced with iron bands rests here.
+0|A faint breeze suggests the exit is nearby.
+1|Moonlight spills faintly into the corridor.
+0|You see the dungeon exit just ahead.
